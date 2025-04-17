@@ -1,0 +1,36 @@
+html{
+    justify-items: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+form {
+    border: rgb(158, 158, 158) solid 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 300px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 30px;
+    width: 80px;
+    border-radius: 20px;
+    border-color: #CCC;
+    background-color: rgb(255, 255, 255);
+}
