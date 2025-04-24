@@ -1,17 +1,46 @@
 import './styles/style.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { auth } from './config/firebaseConfig.js';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Link } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Registra() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirma, setConfirma] = useState('')
+  const [aviso, setAviso] = useState('')
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(confirma != senha) {
+      setAviso('As senhas não coincidem')
+    }
+    else{
+      setAviso('')
+    }
+  }, [senha, confirma])
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    if (senha !== confirmacao) {
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, senha);
+      alert('Usuário criado com sucesso!')
+      navigate('/login')
+    } catch (error) {
+      console.error(error);
+      setAviso(error.message);
+    }
+  }
   return (
   <main>
-    <form>
+    <form onSubmit={handleRegister}>
     <h1>Registrar-se</h1>
     <label htmlFor="email">E-mail</label>
       <input
@@ -39,9 +68,9 @@ function Registra() {
         value={confirma}
         onChange={(evento) => setConfirma(evento.target.value)}
       ></input> 
-
-      <button type='submit'>Enviar</button>
-      <Link to='login'>Ja possui uma conta?</Link>
+        <p>{aviso}</p>
+      <button type='submit' disabled={aviso != ''}>Enviar</button>
+      <Link to='/login'>Ja possui uma conta?</Link>
     </form>
   </main>
   );
